@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+@import url('https://unpkg.com/normalize.css') layer(normalize);
+
+@layer normalize, base, demo, stick, effect, scrollbar, debug;
+
+@layer base {
+  :root {
+    --font-size-min: 16; /* Adjusted minimum font size */
+    --font-size-max: 24; /* Adjusted maximum font size */
+    --font-ratio-min: 1.1;
+    --font-ratio-max: 1.33;
+    --font-width-min: 375;
+    --font-width-max: 1500;
+  }
+
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #0e0e0e, #1e1e1e);
+    min-height: 100vh;
+    font-family: 'Geist', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    position: relative; /* Position relative for particles */
+  }
+
+  .particles {
+    position: absolute; /* Position particles absolutely */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow clicks to pass through */
+    overflow: hidden; /* Hide overflow */
+  }
+
+  .particle {
+    position: absolute;
+    width: 10px; /* Width of the particle */
+    height: 10px; /* Height of the particle */
+    background-color: orange; /* Particle color */
+    border-radius: 50%; /* Make particles circular */
+    opacity: 0; /* Start invisible */
+    animation: fade 3s infinite; /* Fade animation */
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-20px); /* Move up slightly */
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+  }
+
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    width: 100%;
+    padding: 0 5rem; /* Horizontal padding */
+  }
+
+  h1 {
+    line-height: 1; /* Adjust line height */
+    margin: 0;
+    background: linear-gradient(90deg, #ff6600, #ff3300);
+    background-clip: text;
+    color: transparent;
+    font-size: 4rem; /* Adjusted font size */
+    text-align: center; /* Center text */
+  }
+
+  .tweak-container {
+    display: flex;
+    flex-direction: row; /* Arrange tweaks in a row */
+    justify-content: center; /* Center tweaks horizontally */
+    align-items: center; /* Center tweaks vertically */
+    margin-top: 20px; /* Space between header and tweaks */
+  }
+
+  .tweak-container ul {
+    display: flex;
+    padding-inline: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  .tweak-container li {
+    font-size: 2rem; /* Adjusted tweak font size */
+    cursor: pointer;
+    transition: color 0.3s, transform 0.2s, opacity 0.2s;
+    opacity: 0.2; /* Start with low opacity */
+    margin: 0 20px; /* Space between tweaks */
+    padding: 10px 20px; /* Padding for clickable area */
+    border: 2px solid transparent; /* Add border for hover effect */
+    border-radius: 8px; /* Rounded corners */
+    text-align: center; /* Center text */
+  }
+
+  .tweak-container li:hover {
+    color: #ff6600; /* Highlight color on hover */
+    border-color: #ff6600; /* Border color on hover */
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    opacity: 1; /* Full opacity on hover */
+  }
+
+  .tweak-container li.active {
+    color: #ff6600; /* Highlight color for active item */
+    transform: scale(1.1); /* Slightly enlarge active item */
+    opacity: 1; /* Full opacity for active item */
+  }
+
+  footer {
+    padding-block: 2rem;
+    opacity: 0.5;
+    text-align: center;
+    font-size: 1.5rem; /* Adjusted footer font size */
+  }
+
+  .bear-link {
+    color: #ffffff;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 48px; /* Adjusted size */
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    opacity: 0.8;
+  }
+
+  .bear-link:hover {
+    opacity: 1;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+@layer effect {
+  :root {
+    --start: 0;
+    --end: 360;
+    --lightness: 65%;
+    --base-ch roma: 0.3;
+  }
+  [data-theme='dark'] {
+    --lightness: 75%;
+  }
+  [data-theme='light'] {
+    --lightness: 65%;
+  }
+  @media (prefers-color-scheme: dark) {
+    --lightness: 75%;
+  }
+  ul {
+    --step: calc((var(--end) - var(--start)) / (var(--count) - 1));
+  }
+  li:not(:last-of-type) {
+    color: oklch(
+      var(--lightness) var(--base-chroma)
+        calc(var(--start) + (var(--step) * var(--i)))
+    );
+  }
+}
+
+@layer stick {
+  section:first-of-type {
+    --font-level: 6;
+    display: flex;
+    line-height: 1.25;
+    width: 100%;
+    padding-left: 5rem;
+  }
+  section:last-of-type {
+    min-height: 100vh;
+    display: flex;
+    place-items: center;
+    width: 100%;
+    justify-content: center;
+
+    h2 {
+      --font-level: 6;
+    }
+  }
+  main {
+    width: 100%;
+  }
+}
+
+@layer demo {
+  header {
+    min-height: 100vh;
+    display: flex;
+    place-items: center;
+    width: 100%;
+    padding-inline: 5rem;
+  }
+
+  footer {
+    padding-block: 2rem;
+    opacity: 0.5;
+  }
+
+  h1 {
+    --font-size-min: 24;
+    --font-level: 8;
+    text-wrap: pretty;
+    line-height: 0.8;
+    margin: 0;
+    background: linear-gradient(
+      canvasText 60%,
+      color-mix(in oklch, canvas, canvasText)
+    );
+    background-clip: text;
+    color: #0000;
+  }
+}
