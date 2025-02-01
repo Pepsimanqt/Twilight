@@ -237,4 +237,21 @@
     background-clip: text;
     color: #0000;
   }
+  
+.donate-button {
+    position: fixed; /* Fixed position */
+    top: 1rem; /* Distance from the top */
+    left: 1rem; /* Distance from the left */
+    background-color: #ff6600; /* Button color */
+    color: white; /* Text color */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for the button */
+    font-size: 1rem; /* Font size */
+    cursor: pointer; /* Pointer cursor transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.donate-button:hover {
+    background-color: #ff3300; /* Darker shade on hover */
+}
 }
